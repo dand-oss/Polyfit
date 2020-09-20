@@ -8,6 +8,13 @@ project(
     DESCRIPTION "C++ implementation of polyfit, with optional weighting like in numpy.  Two implementations, one with boost/ublas lib, and one with the Eigen lib."
     HOMEPAGE_URL "https://github.com/dand-oss/Polyfit")
 
+###############
+# ASI default settings
+list(APPEND CMAKE_MODULE_PATH "$ENV{ASV_CMAKE}")
+include(asv_cmake_defaults)
+asv_cmake_defaults( )
+###############
+
 set(libname "Polyfit")
 
 add_library(${libname} INTERFACE)

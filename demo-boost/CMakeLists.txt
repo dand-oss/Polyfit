@@ -4,6 +4,13 @@ project(
     LANGUAGES CXX
     VERSION 7.1.0)
 
+###############
+# ASI default settings
+list(APPEND CMAKE_MODULE_PATH "$ENV{ASV_CMAKE}")
+include(asv_cmake_defaults)
+asv_cmake_defaults( )
+###############
+
 set(exename "Polyfit-Boost-demo")
 
 include(GNUInstallDirs)

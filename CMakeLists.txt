@@ -8,6 +8,13 @@ project(
     HOMEPAGE_URL "https://github.com/dand-oss/Polyfit"
 )
 
+###############
+# ASI default settings
+list(APPEND CMAKE_MODULE_PATH "$ENV{ASV_CMAKE}")
+include(asv_cmake_defaults)
+asv_cmake_defaults( )
+###############
+
 set(libname "Polyfit")
 
 # Option to build demos

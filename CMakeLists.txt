@@ -53,50 +53,14 @@ if(POLYFIT_BUILD_DEMOS)
     # Find dependencies for demos
     find_package(Eigen3 CONFIG REQUIRED)
     
-    # Find boost
-    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-        Set(Boost_COMPILER "-clang50")
-    endif()
-    if(NOT BOOST_ROOT)
-        set(BOOST_ROOT $ENV{BOOST_ROOT} CACHE PATH "Boost Root Directory")
-    endif(NOT BOOST_ROOT)
-    set(Boost_NO_SYSTEM_PATHS ON)
-    if(USE_STATIC_BOOST)
-        set(Boost_USE_STATIC_LIBS ON)
-    else()
-        set(Boost_USE_STATIC_LIBS OFF)
-        add_definitions("-DBOOST_ALL_DYN_LINK")
-    endif()
-    set(Boost_USE_MULTITHREADED ON)
-    
-    # Try CONFIG mode first, fallback to module mode
+    # Find Boost - use CONFIG mode if available, fallback to MODULE mode
     find_package(Boost CONFIG QUIET COMPONENTS headers)
     if(NOT Boost_FOUND)
-        find_package(Boost 1.78.0 EXACT REQUIRED COMPONENTS headers)
+        find_package(Boost REQUIRED COMPONENTS headers)
     endif()
 
-    # Boost demo
-    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/demo-boost/main.cpp")
-        add_executable(Polyfit-Boost-demo demo-boost/main.cpp)
-        target_link_libraries(Polyfit-Boost-demo PUBLIC
-            ${libname}::${libname}
-            Boost::headers
-        )
-        install(TARGETS Polyfit-Boost-demo
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-    endif()
-
-    # Eigen demo
-    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/demo-eigen/main.cpp")
-        add_executable(Polyfit-Eigen-demo demo-eigen/main.cpp)
-        target_link_libraries(Polyfit-Eigen-demo PUBLIC
-            ${libname}::${libname}
-            Eigen3::Eigen
-            Boost::headers
-        )
-        install(TARGETS Polyfit-Eigen-demo
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-    endif()
+    add_subdirectory(demo-boost)
+    add_subdirectory(demo-eigen)
 endif()
 
 # -----------------------
